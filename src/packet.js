@@ -86,7 +86,7 @@ class DNSRecord {
   constructor() {
     this.name = '';
     this.type = 0;
-    this.class = 0;
+    this.class = 1;
     this.ttl = 0;
   }
 
