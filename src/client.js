@@ -26,7 +26,7 @@ class DNSRequest {
   }
 
   send() {
-    this.client._dgram.send(this.packet, 53, this.options.server, (err) => {
+    this.client._dgram.send(this.packet, this.options.port, this.options.server, (err) => {
       if (err) {
         this.removeSelf();
         this.defer.reject(err);
@@ -68,6 +68,7 @@ export default class DNSClient {
     if (family !== 4 && family !== 6) throw new Error('family must be either 4 or 6');
 
     this._server = options.server || dns.getServers()[0];
+    this._port = options.port || 53;
     
     this._dgram = dgram.createSocket('udp' + family);
     this._id = 0;
@@ -101,7 +102,12 @@ export default class DNSClient {
     if (typeof options !== 'object') throw new TypeError('options need to be object');
     options.retry = options.retry || 1;
     options.timeout = options.timeout || 2000;
-    options.server = options.server || this._server;
+    if (options.server) {
+      options.port = options.port || 53;
+    } else {
+      options.server = this._server;
+      options.port = this._port;
+    }
 
     // Create and track request
     let req = new DNSRequest(packet, this, options);
