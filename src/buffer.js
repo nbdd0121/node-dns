@@ -6,7 +6,7 @@ export class BufferWriter {
 
   _ensureCapacity(diff) {
     let newLength = this._length + diff;
-    if (this._buffer.length >= diff) return;
+    if (this._buffer.length >= newLength) return;
     let newCapacity = Math.max(newLength, this._buffer.length * 2);
     this._buffer = Buffer.concat([this._buffer], newCapacity);
   }
