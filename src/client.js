@@ -1,7 +1,6 @@
 import dgram from 'dgram';
 import dns from 'dns';
-import {DNSQuestion, DNSRecord, DNSPacket} from './packet';
-import {} from './record';
+import {DNSPacket} from './packet';
 import Defer from './defer';
 
 class DNSRequest {
