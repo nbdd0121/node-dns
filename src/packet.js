@@ -5,6 +5,11 @@ class DNSBufferReader extends BufferReader {
     super(...args);
   }
 
+  readCharString() {
+    let len = this.readUInt8();
+    return this.readString(len);
+  }
+
   readName() {
     let ret = [];
     while (true) {
@@ -36,6 +41,10 @@ class DNSBufferWriter extends BufferWriter {
     super(...args);
 
     this._names = Object.create(null);
+  }
+
+  writeCharString(string) {
+    this.writeUInt8(string.length).writeString(string);
   }
 
   writeName(name) {

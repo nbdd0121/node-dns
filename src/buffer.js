@@ -18,6 +18,13 @@ export class BufferWriter {
     return this;
   }
 
+  writeInt16BE(value) {
+    this._ensureCapacity(2);
+    this._buffer.writeInt16BE(value, this._length);
+    this._length += 2;
+    return this;
+  }
+
   writeUInt16BE(value) {
     this._ensureCapacity(2);
     this._buffer.writeUInt16BE(value, this._length);
@@ -72,6 +79,14 @@ export class BufferReader {
     this._ptr += 1;
     return ret;
   }
+
+  readInt16BE() {
+    this._boundCheck(2);
+    let ret = this._buffer.readInt16BE(this._ptr);
+    this._ptr += 2;
+    return ret;
+  }
+
 
   readUInt16BE() {
     this._boundCheck(2);
